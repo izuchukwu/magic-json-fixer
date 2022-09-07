@@ -14,7 +14,7 @@ import {CheckIcon, ClipboardIcon} from '@radix-ui/react-icons'
 import _ from 'lodash'
 import type {NextPage} from 'next'
 import Head from 'next/head'
-import {useCallback, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import styles from '../styles/Home.module.css'
 import Spinner from './Spinner'
 
