@@ -24,19 +24,23 @@ const EverypromptURL =
 		: 'http://localhost:9999'
 
 const runPrompt = async (badJSON: string) => {
-	const epRes = await fetch(
-		`${EverypromptURL}/prompt/izu/fix-everyprompt-json`,
-		{
-			method: 'POST',
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				user: 'testing',
-				variables: {json: badJSON}
-			})
-		}
-	)
-	const epJSON = await epRes.json()
-	return epJSON
+	try {
+		const epRes = await fetch(
+			`${EverypromptURL}/prompt/izu/fix-everyprompt-json`,
+			{
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					user: 'testing',
+					variables: {json: badJSON}
+				})
+			}
+		)
+		const epJSON = await epRes.json()
+		return epJSON
+	} catch (e) {
+		return {success: false, error: -1}
+	}
 }
 
 const Home: NextPage = () => {
@@ -48,6 +52,7 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		const asyncFixJSON = async () => {
 			if (!badJSON) return
+			setFixedJSON('')
 			const promptJSON = await runPrompt(badJSON)
 
 			if (!promptJSON.success) {
